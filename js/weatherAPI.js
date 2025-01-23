@@ -1,6 +1,8 @@
+import config from "./config.js";
+
 export class WeatherAPI {
   constructor() {
-    this.apiKey = '2660004242d39297073d7cb53564a358';
+    this.apiKey = config.API_KEY;
     this.baseUrl = 'http://api.weatherstack.com';
   }
 
@@ -23,8 +25,8 @@ export class WeatherAPI {
 
     if (!response.ok) {
       throw new Error('Failed to fetch forecast data');
-    }
-
+        }
+        
     return await response.json();
   }
 

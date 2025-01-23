@@ -83,14 +83,20 @@ class App {
 
         console.log("Forecast:", forecast);
 
-        // Update UI
+        // Update Current weather
         this.ui.updateCurrentWeather(current);
-        this.ui.hideLoading();  // Move this line here to hide loading after current weather is updated
-
+        this.ui.hideLoading_cw();  
+ 
+        // Update Forecast data
         this.ui.updateForecast(forecast);
-        this.chart.updateHistoricalChart(historical);
+        this.ui.hideLoading_fd(); 
 
-        this.ui.hideLoading();  // Keep this to hide loading after all data is fetched
+        // Update Historical data
+        this.chart.updateHistoricalChart(historical);
+        this.ui.hideLoading_hd(); 
+
+        // this.ui.hideLoading(); 
+
     } catch (error) {
         this.ui.showError(error.message);
     }

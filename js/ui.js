@@ -5,9 +5,15 @@ export class UI {
     document.getElementById('historical-data').classList.add('loading');
   }
 
-  hideLoading() {
+  hideLoading_cw() {
     document.getElementById('current-weather-data').classList.remove('loading');
+  }
+
+  hideLoading_fd() {
     document.getElementById('forecast-data').classList.remove('loading');
+  }
+
+  hideLoading_hd() {
     document.getElementById('historical-data').classList.remove('loading');
   }
 
@@ -31,16 +37,50 @@ export class UI {
 
   updateForecast(data) {
     const container = document.getElementById('forecast-data');
-    container.innerHTML = data.forecast.map(day => `
-      <div class="weather-card animate-fade-in p-4">
+    
+    // Clear previous content
+    container.innerHTML = '';
+
+    // Get tomorrow's date
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+    const tomorrowDateString = tomorrow.toISOString().split('T')[0]; // Format YYYY-MM-DD
+
+    // Get tomorrow's forecast
+    const tomorrowForecast = data.forecast[tomorrowDateString];
+
+    // Get the next three days' forecasts
+    const nextThreeDaysForecast = Object.keys(data.forecast)
+        .slice(1, 4) // Get the next three days after today
+        .map(date => data.forecast[date]);
+
+    // Create a prominent display for tomorrow's forecast
+    const tomorrowCard = `
+      <div class="weather-card animate-fade-in p-4 prominent">
         <div class="flex justify-between items-center">
-          <span class="font-medium">${day.date}</span>
-          <span class="temperature font-semibold">${day.temperature.max}°C / ${day.temperature.min}°C</span>
+          <span class="font-medium">${data.location.name} - Tomorrow</span>
+          <span class="temperature font-semibold">${tomorrowForecast.maxtemp}°C / ${tomorrowForecast.mintemp}°C</span>
         </div>
-        <p class="mt-2 text-[var(--text-secondary)]">${day.weather_descriptions[0]}</p>
+        <p class="mt-2 text-[var(--text-secondary)]">${tomorrowForecast.weather_descriptions[0]}</p>
+      </div>
+    `;
+
+    // Create a less prominent display for the next three days' forecasts
+    const nextThreeDaysCards = nextThreeDaysForecast.map(day => `
+      <div class="weather-card animate-fade-in p-2 less-prominent">
+        <div class="flex justify-between items-center">
+          <span class="font-medium">${data.location.name} - ${day.date}</span>
+          <span class="temperature font-semibold">${day.maxtemp}°C / ${day.mintemp}°C</span>
+        </div>
+        <p class="mt-1 text-[var(--text-secondary)]">${day.weather_descriptions[0]}</p>
       </div>
     `).join('');
-  }
+
+    // Combine both sections and update the container
+    container.innerHTML = tomorrowCard + nextThreeDaysCards;
+}
+
 
   showError(message) {
     // Implementation for error display

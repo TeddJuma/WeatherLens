@@ -1,7 +1,7 @@
 export class WeatherAPI {
   constructor() {
-    this.apiKey = Process.env.API_KEY;
-    this.baseUrl = 'http://api.weatherstack.com';
+    this.apiKey = process.env.API_KEY;
+    this.baseUrl = 'https://api.weatherstack.com';
   }
 
   async getCurrentWeather(location) {

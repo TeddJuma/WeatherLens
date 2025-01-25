@@ -41,7 +41,7 @@ Follow these steps to set up the project locally:
 
 ### Accessing the Application
 
-The finished application can be accessed [here.](https:/teddjuma.netlify.app/weatherlens)
+The finished application can be accessed [here](https:/teddjuma.netlify.app/weatherlens).
 
 ## Configuration
 

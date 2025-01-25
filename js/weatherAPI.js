@@ -1,6 +1,8 @@
+import config from "./config.js";
+
 export class WeatherAPI {
   constructor() {
-    this.apiKey = process.env.API_KEY;
+    this.apiKey = config.API_KEY;
     this.baseUrl = 'https://api.weatherstack.com';
   }
 
